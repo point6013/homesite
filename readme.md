@@ -1,4 +1,16 @@
+<!-- TOC -->
 
+- [时间格式的转化](#时间格式的转化)
+- [查看数据类型](#查看数据类型)
+- [查看DataFrame的详细信息](#查看dataframe的详细信息)
+- [填充缺失值](#填充缺失值)
+- [category 数据类型转化](#category-数据类型转化)
+- [模型参数设定](#模型参数设定)
+- [结论](#结论)
+
+<!-- /TOC -->
+
+- 该项目是针对kaggle中的[homesite](https://www.kaggle.com/c/homesite-quote-conversion)进行的算法预测，使用xgboost的sklearn接口，进行数据建模，购买预测。
 
 ```python
 import pandas as pd
@@ -19,19 +31,6 @@ train.head()
 
 
 <div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -231,19 +230,6 @@ train.head()
 
 
 <div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -610,19 +596,6 @@ pd.DataFrame(clf.cv_results_['params'])
 
 
 <div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -755,5 +728,9 @@ metrics.confusion_matrix(result1,result2)
 
     array([[148836,  24862],
            [    66,     72]], dtype=int64)
-
+#### 结论
+- 对数据的时间进行了预处理
+- 对数据中的category类型进行了label化，我觉得有必要对这个进行重新考虑，个人觉得应该使用one-hot进行category的处理，而不是LabelEncoder处理（疑虑）
+- 得到的模型对测试集进行处理，Raw AUC 0.94，而对应的准确率只有85%，实际上并没有实际的分类效果，对于实际上是0的，预测成1的太多了，也就是假阳性太高了，而漏检的也很多。
+- 其实模型还有很多可以调整的参数都没有调整，如果对调参有兴趣的可以查看美团的文本分类项目中的例子。
 
